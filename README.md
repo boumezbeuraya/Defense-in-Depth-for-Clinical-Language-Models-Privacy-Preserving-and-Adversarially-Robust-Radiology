@@ -6,7 +6,6 @@
 
 ### A Privacy-Preserving Framework for Safeguarding Clinical Language Models
 
-[![Paper](https://img.shields.io/badge/Paper-PeerJ%20JCS-blue?style=flat-square&logo=readthedocs)](https://peerj.com/computer-science/)
 [![Python](https://img.shields.io/badge/Python-3.8%2B-blue?style=flat-square&logo=python)](https://www.python.org/)
 [![PyTorch](https://img.shields.io/badge/PyTorch-1.10%2B-EE4C2C?style=flat-square&logo=pytorch)](https://pytorch.org/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green?style=flat-square)](LICENSE)
@@ -14,9 +13,9 @@
 [![HuggingFace](https://img.shields.io/badge/🤗-Transformers-yellow?style=flat-square)](https://huggingface.co/)
 [![Dataset](https://img.shields.io/badge/Dataset-Open--I%20Chest%20X--ray-orange?style=flat-square&logo=kaggle)](https://www.kaggle.com/datasets/financekim/curated-cxr-report-generation-dataset/data)
 
-> **Official implementation** of *"SecureMed-LLM: A Privacy-Preserving Framework for Safeguarding Clinical Language Models"*
-> — Aya Boumezbeur, Fouzi Harrag, Mohamed Deriche, Muhammad Khan
-> — Submitted to *PeerJ Computer Science*, November 2025
+> **Reference implementation** of the Master's thesis *"SecureMed-LLM: A Privacy-Preserving Framework for Safeguarding Clinical Language Models"* — Aya Boumezbeur (Université Ferhat Abbas Sétif 1, 2025)
+>
+> **Status:** research prototype. Not clinically validated and not intended for clinical use.
 
 </div>
 
@@ -26,10 +25,10 @@
 
 - [Overview](#-overview)
 - [Motivation](#-motivation)
-- [Key Contributions](#-key-contributions)
+- [Key Features](#-key-features)
 - [Framework Architecture](#-framework-architecture)
 - [Repository Structure](#-repository-structure)
-- [Installation](#-installation)
+- [Installation](#installation)
 - [Dataset](#-dataset)
 - [Usage](#-usage)
   - [Data Preprocessing & Anonymization](#1-data-preprocessing--phi-anonymization)
@@ -40,7 +39,9 @@
   - [Full Pipeline](#6-running-the-full-pipeline)
 - [Experimental Results](#-experimental-results)
 - [Configuration](#-configuration)
+- [Limitations](#limitations)
 - [Citation](#-citation)
+- [Related Publication](#-related-publication)
 - [License](#-license)
 - [Contact](#-contact)
 
@@ -48,7 +49,7 @@
 
 ## 🧠 Overview
 
-**SecureMed-LLM** is a modular, multi-layered safeguarding framework for privacy-preserving clinical report generation. It addresses three critical threat classes simultaneously:
+**SecureMed-LLM** is a modular, multi-layered safeguarding framework for privacy-preserving clinical report generation. It addresses four critical threat classes simultaneously:
 
 | Threat Class | Risk | Defense |
 |---|---|---|
@@ -57,7 +58,7 @@
 | **Unsafe Outputs** | Hallucinated findings, logical inconsistencies | IDS-LLM rule-based + anomaly detection |
 | **Data Interception** | Report eavesdropping, unauthorized access | ECIES/Curve25519 encrypted delivery |
 
-Unlike existing approaches that treat these threats in isolation, SecureMed-LLM integrates all defenses into a **coordinated end-to-end pipeline** spanning training, inference, and deployment.
+Unlike approaches that treat these threats in isolation, SecureMed-LLM integrates all defenses into a **coordinated end-to-end pipeline** spanning training, inference, and deployment.
 
 ---
 
@@ -74,21 +75,17 @@ These risks are especially severe in **resource-constrained and developing-world
 
 ---
 
-## 🏆 Key Contributions
+## 🏆 Key Features
 
-1. **Comprehensive Vulnerability Analysis** — Systematic categorization of LLM security risks in high-stakes clinical settings with clinically relevant failure modes.
-
-2. **Structured Defense Survey** — Critical review of hybrid neural-symbolic, reasoning-augmented, privacy-preserving, threat-specific, and domain-specific safeguards.
-
-3. **SecureMed-LLM Framework** — A multi-layered defense architecture combining:
+1. **Multi-layered defense pipeline** — a coordinated architecture combining:
    - Local multimodal PHI anonymization (Med-Guard)
    - DP-SGD training with adversarial augmentation
    - IDS-LLM post-generation validation
    - ECIES encrypted report delivery
 
-4. **Empirical Evaluation** — Evaluation on Open-I chest X-ray dataset across adversarial attacks (FGSM, PGD, DeepFool), membership inference attacks, and PHI leakage, with ablation studies for each component.
+2. **Empirical evaluation** — evaluation on the Open-I chest X-ray dataset across adversarial attacks (FGSM, PGD, DeepFool), membership inference attacks, and PHI leakage, with ablation studies for each component.
 
-5. **Deployment Insights** — Practical analysis of inference latency, clinical feasibility, and resource-constrained deployment.
+3. **Deployment insights** — analysis of inference latency and resource-constrained deployment.
 
 ---
 
@@ -137,7 +134,7 @@ Clinician Device                          Secure Hospital Server
 ## 📂 Repository Structure
 
 ```
-SecureMed-LLM/
+securemed-llm/
 │
 ├── README.md                        # This file
 ├── LICENSE                          # MIT License
@@ -156,7 +153,7 @@ SecureMed-LLM/
 │   ├── models/
 │   │   ├── biomed_clip_encoder.py   # BioMedCLIP vision encoder wrapper
 │   │   ├── t5_decoder.py            # T5 text decoder with projection layer
-│   │   └── pipeline.py             # Full BioMedCLIP + T5 pipeline
+│   │   └── pipeline.py              # Full BioMedCLIP + T5 pipeline
 │   │
 │   ├── privacy/
 │   │   └── dp_training.py           # DP-SGD training with Opacus
@@ -187,14 +184,14 @@ SecureMed-LLM/
 
 ---
 
-## ⚙️ Installation
+## Installation
 
 ### Option A — pip (recommended for quick setup)
 
 ```bash
 # Clone the repository
-git clone https://github.com/ayamouna/SecureMed-LLM-A-Privacy-Preserving1-Framework-for-Safeguarding-Clinical2-Language-Models.git
-cd SecureMed-LLM-A-Privacy-Preserving1-Framework-for-Safeguarding-Clinical2-Language-Models
+git clone https://github.com/boumezbeuraya/securemed-llm.git
+cd securemed-llm
 
 # Create and activate virtual environment
 python -m venv venv
@@ -494,9 +491,9 @@ data:
 
 ---
 
-## ⚠️ Limitations
+## Limitations
 
-This study carries several important limitations that future work will address:
+This work carries several important limitations that future work should address:
 
 - **Single-dataset evaluation**: All experiments use the Open-I dataset from a single institution (Indiana University). Results should not be generalized to other modalities, languages, or patient populations.
 - **Weak MIA attack**: A black-box confidence-thresholding MIA is used. Shadow model and likelihood ratio attacks may yield higher attack accuracy; the reported 55% MIA accuracy is an upper bound on privacy protection.
@@ -504,25 +501,28 @@ This study carries several important limitations that future work will address:
 - **No clinical expert validation**: IDS-LLM rules were authored by the research team with reference to published guidelines, not validated by board-certified radiologists.
 - **Encryption scope**: Only the final validated report is encrypted; intermediate embeddings and inference-time activations are not.
 - **No formal regulatory compliance**: Components are technically consistent with HIPAA/GDPR PHI de-identification requirements, but formal certification has not been performed.
+- **Research prototype**: This repository is not a deployed or clinically validated system and must not be used for clinical decision-making.
 
 ---
 
 ## 📖 Citation
 
-If you use this code or build upon this work, please cite:
+If you use this code, please cite the thesis:
 
 ```bibtex
-@article{boumezbeur2025securemed,
-  title     = {SecureMed-LLM: A Privacy-Preserving Framework for Safeguarding Clinical Language Models},
-  author    = {Boumezbeur, Aya and Harrag, Fouzi and Deriche, Mohamed and Khan, Muhammad},
-  journal   = {PeerJ Computer Science},
-  year      = {2025},
-  note      = {Submitted for peer review, November 2025},
-  institution = {University of Setif 1 Ferhat Abbas, Algeria;
-                 Ajman University, UAE;
-                 King Saud University, Saudi Arabia}
+@mastersthesis{boumezbeur2025securemed,
+  title  = {SecureMed-LLM: A Privacy-Preserving Framework for Safeguarding Clinical Language Models},
+  author = {Boumezbeur, Aya},
+  school = {Universit{\'e} Ferhat Abbas S{\'e}tif 1},
+  year   = {2025}
 }
 ```
+
+---
+
+## 📚 Related Publication
+
+Harrag, F., Boumezbeur, A., Dib, M., Deriche, M., Elhadj, Y.M. (2026). *Privacy by Design: A Review of Safeguarding Strategies for LLMs in Critical AI Applications*. In: Artificial Intelligence and its Practical Applications (I2COMSAPP 2025), Lecture Notes in Networks and Systems, vol. 1917, Springer, Cham, pp. 226–237. [https://doi.org/10.1007/978-3-032-22299-2_15](https://doi.org/10.1007/978-3-032-22299-2_15)
 
 ---
 
@@ -534,12 +534,7 @@ This project is licensed under the **MIT License** — see [LICENSE](LICENSE) fo
 
 ## 📬 Contact
 
-| Author | Affiliation | Contact |
-|---|---|---|
-| **Aya Boumezbeur** *(lead)* | LRSD Lab, University of Setif 1, Algeria | GitHub: [@boumezbeuraya](https://github.com/boumezbeuraya) |
-| **Mohamed Deriche** *(corresponding)* | AI Research Centre, Ajman University, UAE | m.deriche@ajman.ac.ae |
-| **Fouzi Harrag** | LRSD Lab, University of Setif 1, Algeria | — |
-| **Muhammad Khan** | King Saud University, Saudi Arabia | — |
+**Aya Boumezbeur** — [GitHub](https://github.com/boumezbeuraya) · [LinkedIn](https://www.linkedin.com/in/boumezbeur-aya-948503342/)
 
 ---
 
